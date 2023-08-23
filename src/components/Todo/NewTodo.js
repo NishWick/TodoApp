@@ -1,30 +1,14 @@
 import Modal from "../UI/Modal";
-import React, { useRef, useState } from "react";
+import React, { useRef, useContext } from "react";
 import "./NewTodo.css";
+import TodoContext from "../Store/todo_context";
 
 const NewTodo = (props) => {
 
   const todoDescriptionRef = useRef("");
 
-  const addNewtodoHandler = async (item) => {
-    const response = await fetch(
-      "https://todo-26b90-default-rtdb.firebaseio.com/todoItems.json",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          description: item,
-          status: false,
-        }),
-      }
-    );
+  const todoCtxt = useContext(TodoContext);
 
-    if (!response.ok) {
-      throw new Error("Oops Something Went Wrong!!");
-      console.log(response.ok);
-    }
-    const todoData = await response.json();
-    console.log(todoData);
-  };
 
   const submitNewTodoHandler = (event) => {
     event.preventDefault();
@@ -32,7 +16,7 @@ const NewTodo = (props) => {
     const todoDescription = todoDescriptionRef.current.value;
     console.log("item : " + todoDescription);
 
-    addNewtodoHandler(todoDescription);
+    todoCtxt.addTodo(todoDescription);
 
     props.onClose();
   };

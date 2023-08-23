@@ -1,0 +1,12 @@
+.headerDiv{
+    background-color: rgb(1, 11, 31);
+    height: 100%;
+}
+
+.todo{
+
+    color: rgb(66, 36, 235);
+    text-align: center;
+    padding-top: 50px;
+    
+}

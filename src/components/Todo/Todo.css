@@ -46,3 +46,9 @@
     font-weight: bold;
     font-size: 20pxs;
 }
+
+.divContent{
+
+    /* width:max-content; */
+    margin: auto;
+}

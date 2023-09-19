@@ -1,22 +1,23 @@
 import Modal from "../UI/Modal";
-import React, { useRef, useContext } from "react";
+import React, { useContext, useState } from "react";
 import "./NewTodo.css";
-import TodoContext from "../Store/todo_context";
+import { TodoContext } from "../Store/context-providers/TodoContext.provider";
 
 const NewTodo = (props) => {
 
-  const todoDescriptionRef = useRef("");
+  const [todoItem, setTodoItem] = useState("");
 
-  const todoCtxt = useContext(TodoContext);
-
+  const [, todoAction] = useContext(TodoContext);
 
   const submitNewTodoHandler = (event) => {
     event.preventDefault();
 
-    const todoDescription = todoDescriptionRef.current.value;
-    console.log("item : " + todoDescription);
-
-    todoCtxt.addTodo(todoDescription);
+    todoAction.addNewTodo([
+      {
+        title: todoItem,
+        completed: false,
+      },
+    ]);
 
     props.onClose();
   };
@@ -29,7 +30,9 @@ const NewTodo = (props) => {
             className="modalInput"
             type="text"
             id="description"
-            ref={todoDescriptionRef}
+            name="title"
+            value={todoItem}
+            onChange={(event) => {setTodoItem(event.target.value)}}
             placeholder="Add New Todo"
             required
           />

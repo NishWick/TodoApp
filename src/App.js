@@ -3,7 +3,8 @@ import "./App.css";
 import Header from "./components/Header/Header";
 import NewTodo from "./components/Todo/NewTodo";
 import Todo from "./components/Todo/Todo";
-import TodoProvider from "./components/Store/TodoProvider";
+import { TodoContextProvider } from "./components/Store/context-providers/TodoContext.provider";
+import { ErrorBoundary } from "./components/UI/ErrorBoundary";
 
 function App() {
   const [addTodoIsShown, setAddTodoIsShown] = useState(false);
@@ -17,13 +18,15 @@ function App() {
   };
 
   return (
-    <TodoProvider>
-      <div className="App">
-        {addTodoIsShown && <NewTodo onClose={hideAddTodo} />}
-        <Header />
-        <Todo onShowAddTodo={showAddTodo} />
-      </div>
-    </TodoProvider>
+    <ErrorBoundary>
+      <TodoContextProvider>
+        <div className="App">
+          {addTodoIsShown && <NewTodo onClose={hideAddTodo} />}
+          <Header />
+          <Todo onShowAddTodo={showAddTodo} />
+        </div>
+      </TodoContextProvider>
+    </ErrorBoundary>
   );
 }
 
